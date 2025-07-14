@@ -1,5 +1,5 @@
 
-# Gestor de Tasques amb FastAPI + HTML/JS a derplegar en render.com
+# Gestor de Tasques amb FastAPI + HTML/JS a desplegar en render.com
 
 Aquest projecte és una aplicació molt senzilla però completa que mostra com utilitzar **FastAPI** (un microframework modern i ràpid per a APIs) juntament amb **HTML + JavaScript** per crear una eina de gestió de tasques.
 
