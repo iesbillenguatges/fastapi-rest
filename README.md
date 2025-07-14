@@ -33,7 +33,7 @@ uvicorn main:app --host 0.0.0.0 --port 10000
 
 El `index.html` es servirà automàticament a `/`.
 
-## ✨ Funcions
+## Funcions
 - Afegir / esborrar / completar tasques
 - Interfície dinàmica amb JavaScript
 - Backend RESTful amb FastAPI
