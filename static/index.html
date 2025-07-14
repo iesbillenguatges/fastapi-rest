@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestor de Tasques</title>
+  <style>
+    body { font-family: Arial; background: #f4f4f4; padding: 2rem; }
+    h1 { color: #444; }
+    .tasca { background: #fff; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; box-shadow: 0 2px 4px #ccc; }
+    .tasca.completada { text-decoration: line-through; color: gray; }
+    input, button { padding: 0.5rem; margin: 0.2rem; }
+  </style>
+</head>
+<body>
+  <h1>📋 Tasques</h1>
+  <input type="text" id="titol" placeholder="Nova tasca..." />
+  <button onclick="afegirTasca()">Afegir</button>
+  <div id="llista"></div>
+
+  <script>
+    const api = "http://localhost:8000/tasques";
+    let idCounter = 1;
+
+    function afegirTasca() {
+      const titol = document.getElementById('titol').value;
+      fetch(api, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: idCounter++, titol, completada: false })
+      }).then(() => carregarTasques());
+    }
+
+    function eliminarTasca(id) {
+      fetch(`${api}/${id}`, { method: "DELETE" })
+        .then(() => carregarTasques());
+    }
+
+    function toggleTasca(id, titol, completada) {
+      fetch(`${api}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, titol, completada: !completada })
+      }).then(() => carregarTasques());
+    }
+
+    function carregarTasques() {
+      fetch(api)
+        .then(res => res.json())
+        .then(tasques => {
+          const div = document.getElementById('llista');
+          div.innerHTML = "";
+          tasques.forEach(({ id, titol, completada }) => {
+            const el = document.createElement('div');
+            el.className = 'tasca' + (completada ? ' completada' : '');
+            el.innerHTML = `
+              <span onclick="toggleTasca(${id}, '${titol}', ${completada})">${titol}</span>
+              <button onclick="eliminarTasca(${id})">🗑</button>
+            `;
+            div.appendChild(el);
+          });
+        });
+    }
+
+    carregarTasques();
+  </script>
+</body>
+</html>
