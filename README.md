@@ -21,7 +21,7 @@ static/index.html
 ## Execució local
 ```bash
 pip install -r requirements.txt
-uvicorn main:app --reload
+uvicorn main:app --reload // Si no va correr-lo com a mòdul: python -m uvicorn main:app --reload
 ```
 Obri [http://localhost:8000](http://localhost:8000) al navegador.
 
